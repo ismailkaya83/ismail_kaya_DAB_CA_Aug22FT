@@ -11,6 +11,9 @@ var animalsRouter = require('./routes/animals');
 var speciesRouter = require('./routes/species');
 var temperamentRouter = require('./routes/temperament');
 
+var db = require("./models");
+db.sequelize.sync({ force: false })
+
 var app = express();
 
 // view engine setup
