@@ -1,21 +1,19 @@
 module.exports = (sequelize, Sequelize) => {
     const Animal = sequelize.define('Animal', {
-        id: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
+        Name: Sequelize.DataTypes.STRING,
+        Birthday: Sequelize.DataTypes.DATEONLY,
+        Adopted: {
+            type: Sequelize.DataTypes.BOOLEAN,
+            values: [true, false],
+            default: false
         },
-        Name: Sequelize.STRING,
-        Species: Sequelize.STRING,
-        Birthday: Sequelize.DATEONLY,
-        Size: Sequelize.STRING,
-        Adopted: Sequelize.BOOLEAN
-    },{
+    }, {
         timestamps: false
     });
-    Animal.associate = function(models) {
-        Animal.belongsToMany(models.Temperament, {through: 'Animal_Temperaments'});
-        Animal.belongsTo(models.User, {as: 'Adopter', foreignKey: 'AdoptedBy'});
-    };
+    Animal.associate = function (models) {
+        Animal.belongsTo(models.Specie);
+        Animal.belongsTo(models.Size);
+        Animal.belongsToMany(models.Temperament, {through: models.Animal_Temperament})
+    }
     return Animal
 }

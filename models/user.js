@@ -1,19 +1,15 @@
 module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define('User', {
-        id: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
+        FullName: Sequelize.DataTypes.STRING,
+        Username: Sequelize.DataTypes.STRING,
+        Password: Sequelize.DataTypes.STRING,
+        Role: {
+            type: Sequelize.DataTypes.STRING,
+            values: ['Admin', 'Member']
         },
-        fullName: Sequelize.STRING,
-        username: Sequelize.STRING,
-        password: Sequelize.STRING,
-        role: Sequelize.ENUM('admin', 'member')
-    },{
+    }, {
         timestamps: false
     });
-    User.associate = function(models) {
-        User.hasMany(models.Adoption, {as: 'Adopter', foreignKey: 'AdopterId'});
-    };
+
     return User
 }
