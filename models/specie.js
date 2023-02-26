@@ -5,7 +5,7 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: false
     });
     Specie.associate = function (models) {
-        Specie.hasMany(models.Animal)
+        Specie.hasMany(models.Animal, {foreignKey: 'SpecieId'})
     }
     return Specie
 }

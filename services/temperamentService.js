@@ -1,12 +1,12 @@
 class TemperamentService {
     constructor(db) {
         this.client = db.sequelize;
-        this.Temperament = db.Temperament;
+        this.Temperaments = db.Temperaments;
         console.log(db);
     }
 
     async create(name) {
-        return this.Temperament.create(
+        return this.Temperaments.create(
             {
                 Name: name,
             }
@@ -14,19 +14,19 @@ class TemperamentService {
     }
 
     async get() {
-        return this.Temperament.findAll({
+        return this.Temperaments.findAll({
             where: {}
         })
     }
 
     async delete(temperamentId) {
-        return this.Temperament.destroy({
+        return this.Temperaments.destroy({
             where: {id: temperamentId}
         })
     }
 
     async update(temperamentId, name) {
-        return this.Temperament.update(
+        return this.Temperaments.update(
             {
                 Name: name
             },

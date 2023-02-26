@@ -5,26 +5,28 @@ var db = require('../models');
 var speciesService = new SpeciesService(db);
 var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
+var {checkIfAuthorized, isAdmin} = require('./authMiddlewares');
 
-router.get('/', async function (req, res, next) {
+router.get('/', checkIfAuthorized, isAdmin, jsonParser, async function (req, res, next) {
     let species = await speciesService.get();
-    res.render("species", {species: species, user: null});
+    let user = req.user;
+    res.render("species", {species: species, user}); // Pass message to EJS template
 })
 
-router.post('/add', jsonParser, async function (req, res, next) {
+router.post('/add', checkIfAuthorized, isAdmin, jsonParser, jsonParser, async function (req, res, next) {
     let Name = req.body.Name;
     await speciesService.create(Name);
     res.end();
 });
 
-router.post('/update', async function (req, res, next) {
+router.post('/update', checkIfAuthorized, isAdmin, jsonParser, async function (req, res, next) {
     let Name = req.body.Name;
     let Id = req.body.id;
     await speciesService.update(Id, Name);
     res.end();
 });
 
-router.post('/delete', async function (req, res, next) {
+router.post('/delete', checkIfAuthorized, isAdmin, jsonParser, async function (req, res, next) {
     let Id = req.body.id;
     await speciesService.delete(Id);
     res.end();

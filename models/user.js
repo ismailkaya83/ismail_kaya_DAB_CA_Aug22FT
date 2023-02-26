@@ -5,11 +5,14 @@ module.exports = (sequelize, Sequelize) => {
         Password: Sequelize.DataTypes.STRING,
         Role: {
             type: Sequelize.DataTypes.STRING,
-            values: ['Admin', 'Member']
+            values: ['Admin', 'Member'],
+            defaultValue: "Member"
         },
     }, {
         timestamps: false
     });
-
+    User.associate = function (models) {
+        User.hasMany(models.Animal, {foreignKey: 'UserId'});
+    }
     return User
 }

@@ -5,26 +5,29 @@ var db = require('../models');
 var temperamentService = new TemperamentService(db);
 var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
+var {checkIfAuthorized, isAdmin} = require('./authMiddlewares');
 
-router.get('/', async function (req, res, next) {
+
+router.get('/', checkIfAuthorized, isAdmin, jsonParser, async function (req, res, next) {
     let temperament = await temperamentService.get();
-    res.render("temperament", {user: null, temperament: temperament})
+    let user = req.user;
+    res.render("temperament", {temperament: temperament, user})
 });
 
-router.post('/add', jsonParser, async function (req, res, next) {
+router.post('/add', checkIfAuthorized, isAdmin, jsonParser, async function (req, res, next) {
     let Name = req.body.Name;
     await temperamentService.create(Name);
     res.end();
 });
 
-router.post('/update', async function (req, res, next) {
+router.post('/update', checkIfAuthorized, isAdmin, jsonParser, async function (req, res, next) {
     let Name = req.body.Name;
     let Id = req.body.id;
     await temperamentService.update(Id, Name);
     res.end();
 });
 
-router.post('/delete', async function (req, res, next) {
+router.post('/delete', checkIfAuthorized, isAdmin, jsonParser, async function (req, res, next) {
     let Id = req.body.id;
     await temperamentService.delete(Id);
     res.end();

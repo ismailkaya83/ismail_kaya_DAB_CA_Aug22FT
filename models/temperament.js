@@ -1,11 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
-    const Temperament = sequelize.define('Temperament', {
+    const Temperaments = sequelize.define('Temperaments', {
         Name: Sequelize.DataTypes.STRING
     },{
         timestamps: false
     });
-    Temperament.associate = function(models) {
-        Temperament.belongsToMany(models.Animal, {through: models.Animal_Temperament})
+    Temperaments.associate = function(models) {
+        Temperaments.belongsToMany(models.Animal, {through: models.Animal_Temperament, foreignKey: 'TemperamentId'})
     }
-    return Temperament
+    return Temperaments
 }

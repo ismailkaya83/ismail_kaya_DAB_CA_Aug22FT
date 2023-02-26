@@ -1,15 +1,17 @@
-
 require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var passport = require('passport');
+var session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var animalsRouter = require('./routes/animals');
 var speciesRouter = require('./routes/species');
 var temperamentRouter = require('./routes/temperament');
+var authRouter = require('./routes/auth');
 
 var db = require("./models");
 db.sequelize.sync({ force: false })
@@ -26,7 +28,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  secret: 'random text',
+  resave: false,
+  saveUninitialized: false,
+}));
+app.use(passport.authenticate('session'));
+
 app.use('/', indexRouter);
+app.use('/', authRouter);
 app.use('/animals', animalsRouter);
 app.use('/species', speciesRouter);
 app.use('/temperament', temperamentRouter);

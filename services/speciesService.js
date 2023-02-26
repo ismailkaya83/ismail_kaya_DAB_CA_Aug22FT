@@ -1,6 +1,5 @@
 class SpeciesService {
     constructor(db) {
-        this.client = db.sequelize;
         this.Specie = db.Specie;
         console.log(db);
     }

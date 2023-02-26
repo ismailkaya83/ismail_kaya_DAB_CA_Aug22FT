@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="/animals">Adopt Animal!</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
@@ -19,19 +19,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/temperament">Temperament</a>
                 </li>
-                <% if (!user) { console.log(user)%>
+                <% if (!user) { console.log(user) %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Sign in</a>
+                </li>
+                <% } else { %>
                     <li class="nav-item">
-                        <a class="nav-link" href="/login">Sign in</a>
+                        <a class="nav-link">Hello <%= user.username %></a>
                     </li>
-                    <% } else {%>
-                        <li class="nav-item">
-                            <p class="nav-link">Hello <%= user.username %>
-                            </p>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/logout">Logout</a>
-                        </li>
-                        <% }; %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                <% }; %>
             </ul>
         </div>
     </div>

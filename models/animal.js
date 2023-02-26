@@ -4,16 +4,16 @@ module.exports = (sequelize, Sequelize) => {
         Birthday: Sequelize.DataTypes.DATEONLY,
         Adopted: {
             type: Sequelize.DataTypes.BOOLEAN,
-            values: [true, false],
             default: false
         },
     }, {
         timestamps: false
     });
     Animal.associate = function (models) {
-        Animal.belongsTo(models.Specie);
-        Animal.belongsTo(models.Size);
-        Animal.belongsToMany(models.Temperament, {through: models.Animal_Temperament})
+        Animal.belongsTo(models.Specie, {foreignKey: 'SpecieId'});
+        Animal.belongsTo(models.Size, {foreignKey: 'SizeId'});
+        Animal.belongsTo(models.User, {foreignKey: 'UserId'});
+        Animal.belongsToMany(models.Temperaments, {through: models.Animal_Temperament, foreignKey: 'AnimalId'});
     }
     return Animal
 }
